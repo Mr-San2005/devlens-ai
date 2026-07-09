@@ -13,10 +13,11 @@ export const createWorkspace = async (
   });
 };
 
-export const getMyWorkspaces = async (
-  userId: string
-) => {
-  return await Workspace.find({
-    members: userId,
-  }).populate("owner", "name email");
+export const getMyWorkspaces = async (userId: string) => {
+  return await Workspace.find({ members: userId }).populate("owner", "name email");
+};
+
+export const getWorkspaceMembers = async (workspaceId: string) => {
+  const workspace = await Workspace.findById(workspaceId).populate("members", "name email");
+  return workspace?.members || [];
 };
